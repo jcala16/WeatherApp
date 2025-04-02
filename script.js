@@ -13,9 +13,8 @@ function getWeather(){
 
     //storing URLS
     
-    const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;//THIS WORKS
-    // const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`; //upcoming forecast  ORIGINAL
-    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast/hourly?q=Lockport,us&mode=xml&appid=${apiKey}`; //CANT GET THIS TO WORK
+    const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
+    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=Lockport&appid=${apiKey}&units=imperial`; 
 
     //fetch current weather
     fetch(currentWeatherUrl)
@@ -48,10 +47,10 @@ function displayWeather(data){
     const weatherIcon = document.getElementById('weather-icon');
     const hourlyForecastDiv = document.getElementById('hourly-forecast');
 
-    // //clear anything that was in the divs from a previous request
-    // weatherInfoDiv.innerHTML = ' ';                                                     IF THESE ARE ACTIVE, CURRENTWEATHER WILL THROW AN ERROR
-    // hourlyForecastDiv.innerHTML = ' ';
-    // tempDivInfo.innerHTML = ' ';
+    //clear anything that was in the divs from a previous request
+    weatherInfoDiv.innerHTML = ' ';                                                     
+    hourlyForecastDiv.innerHTML = ' ';
+    tempDivInfo.innerHTML = ' ';
 
     //error handling
     if (data.cod === '404') {
@@ -85,6 +84,12 @@ function displayWeather(data){
 //This function displays the hourly forecast
 function displayHourlyForecast(hourlyData) {
     const hourlyForecastDiv = document.getElementById('hourly-forecast');
+    //Debugging
+    if (!hourlyForecastDiv) {
+        console.error("Element with ID 'hourly-forecast' not found.");
+        return;
+    }
+
 
     const next24Hours = hourlyData.slice(0, 8); // Display the next 24 hours (3-hour intervals)
 
@@ -99,7 +104,7 @@ function displayHourlyForecast(hourlyData) {
             <div class="hourly-item">
                 <span>${hour}:00</span>
                 <img src="${iconUrl}" alt="Hourly Weather Icon">
-                <span>${temperature}°F/span>
+                <span>${temperature}°F</span>
             </div>
         `;
 
