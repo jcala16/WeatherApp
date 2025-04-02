@@ -3,6 +3,8 @@ function getWeather(){
     const apiKey = '60ff0493fc0209ccef573e52dc268352'; //my api key from the weather app https://openweathermap.org/
     const city = document.getElementById('city').value; //stores the value input by the user in the search bar
 
+    
+
     //error handling
     if (!city){ //if the search bar is blank
         alert('Please enter a city'); //notify the user and exit the function
@@ -10,7 +12,7 @@ function getWeather(){
     }
 
     //storing URLS
-    // const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`; //current weather  ORIGINAL  ///THIS DOES NOT WORK
+    
     const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;//THIS WORKS
     // const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`; //upcoming forecast  ORIGINAL
     const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast/hourly?q=Lockport,us&mode=xml&appid=${apiKey}`; //CANT GET THIS TO WORK
