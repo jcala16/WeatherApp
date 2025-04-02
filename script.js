@@ -13,7 +13,7 @@ function getWeather(){
 
     //storing URLS
     
-    const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;//THIS WORKS
+    const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;//THIS WORKS
     // const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`; //upcoming forecast  ORIGINAL
     const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast/hourly?q=Lockport,us&mode=xml&appid=${apiKey}`; //CANT GET THIS TO WORK
 
