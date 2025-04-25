@@ -16,7 +16,7 @@
 
 //This function executes when the button is pushed, and it grabs the weather info from the API
 function getWeather(){
-    const apiKey = '60ff0493fc0209ccef573e52dc268352'; //my api key from the weather app https://openweathermap.org/
+    const apiKey = 'YOUR API KEY'; //my api key from the weather app https://openweathermap.org/
     const city = document.getElementById('city').value; //stores the value input by the user in the search bar
 
     
