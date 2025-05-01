@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "dotenv": "^16.5.0"
+  },
+  "name": "weatherapp",
+  "version": "1.0.0",
+  "main": "script.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcala16/WeatherApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jcala16/WeatherApp/issues"
+  },
+  "homepage": "https://github.com/jcala16/WeatherApp#readme",
+  "description": ""
+}

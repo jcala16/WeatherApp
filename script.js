@@ -1,3 +1,5 @@
+
+
 // For my project, I'd like to build a weather app. The user will be able to enter any city into a search bar, and once they hit the search button they will see the current weather for the city,
 // as well as an upcoming forecast. Some icons will also appear. I will be using an api from openweathermap.org. I will build the project using the fetch() function in JavaScript, along with HTML and CSS. 
 // In the week 1 PR, I demonstrated the ability to recieve data from an API GET request, and display that data to the screen. For the Week 2 PR, I have created the prototype for the application. 
@@ -13,13 +15,16 @@
 // Additionally, I added a function that capitalizes the first letter of every word in the weather description, as the API return is all lowercase. I did this using a RegEx.
 //For PR4, im considering adding a "use current location" button.
 
+//  PART 4:
+// Added a "use current location button". Struggled with getting this to work, turns out I had location turned off in windows settings. Make sure yours in enabled for the service to work properly!
+// I also redid the styling to make the ui larger, and using the Math.round method to remove the decimals that are included by default in the temperature
+
+
+const apiKey = 'YOUR API KEY HERE'; //my api key from the weather app https://openweathermap.org/
 
 //This function executes when the button is pushed, and it grabs the weather info from the API
 function getWeather(){
-    const apiKey = '60ff0493fc0209ccef573e52dc268352'; //my api key from the weather app https://openweathermap.org/
     const city = document.getElementById('city').value; //stores the value input by the user in the search bar
-
-    
 
     //error handling
     if (!city){ //if the search bar is blank
@@ -80,7 +85,7 @@ function displayWeather(data){
     else {
         //storing relevent data from API call in variable
         const cityName = data.name;
-        const temperature = data.main.temp;
+        const temperature =  Math.round(data.main.temp); //using round to remove decimals
         const description = capitalizeWords(data.weather[0].description); //calling capitalizeWords function and storing output in const
         const iconCode = data.weather[0].icon;
         const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@4x.png`;
@@ -132,6 +137,53 @@ function displayHourlyForecast(hourlyData) {
         hourlyForecastDiv.innerHTML += hourlyItemHtml; //append content to the div
     });
 }
+
+document.getElementById('location-btn').addEventListener('click', function() { //adding event listener for location btn
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition( //using browser's built in geolocation method
+            position => {
+                useCurrentLocation(position.coords.latitude, position.coords.longitude); //calling useCurrentLocation function, using the coords from browsers geolocator
+            },
+            error => { //debugging
+                console.error(error); 
+                alert('Unable to retrieve your location.'); 
+            }
+        );
+    } else {
+        alert('Geolocation is not supported by this browser.');
+    }
+});
+
+
+//This function fetches the current weather and forecast using the geolocater within the browser
+//ENSURE LOCATION SERVICES ARE ENABLED IN OS SETTINGS!!!
+function useCurrentLocation(lat, lon){ //NOTE: couldnt get this to work for the longest time, turns out I had my location services turned off on my PC!
+    const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`; //using lat and lon coords
+    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`; 
+
+        //fetch current weather using lat and lon
+        fetch(currentWeatherUrl)
+        .then(response => response.json()) //jsonify the data
+        .then(data => {
+            displayWeather(data); //calling displayWeather function with jsonified data
+        })
+        .catch(error => { //error handling
+            console.error('Error fetching weather data:',error);
+            alert('Error getting weather data');
+        });
+
+    //fetch upcoming weather
+    fetch(forecastUrl)
+        .then(response => response.json()) //jsonify the data
+        .then(data => {
+            displayHourlyForecast(data.list);  //calling displayHourlyForecast function
+        })
+        .catch(error => { //error handling
+            console.error('Error fetching hourly forecast:',error)
+            alert('Error fetching hourly forecast');
+        });
+}
+
 //this function shows the relevant weather icon given by the API
 function showImage() {
     const weatherIcon = document.getElementById('weather-icon');

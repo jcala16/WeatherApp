@@ -11,8 +11,10 @@
     <div id="weather-container">
         <h2>Weather App</h2>
         <input type="text" id="city" placeholder="Type a city">
-        <button onclick="getWeather()">Search</button>
-
+        <div class="buttons">
+          <button onclick="getWeather()" class="weather-btn">Search</button>
+          <button id="location-btn" class="weather-btn">Use Current Location</button>
+        </div>
         <img id="weather-icon" alt="Weather Icon">
         <div id="temp-div"></div>
         <div id="weather-info"></div>
